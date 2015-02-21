@@ -21,7 +21,7 @@ def rpn_eval(expression):
 
     stack = []
 
-    for token in expression.split(' '):
+    for token in expression.split():
         if token in operator_lst:
             second_operand = stack.pop()
             first_operand = stack.pop()
@@ -97,6 +97,12 @@ class RPNEvaluatorOperationsTestCase(unittest.TestCase):
 
     def test_combined_operations(self):
         self.assertEqual(rpn_eval('2.5 1.75 + 2 ^ 0.0625 - -18 - 36 -'), 0)
+
+    def test_token_split(self):
+        self.assertEqual(
+            rpn_eval('     5    8 3 + \t   *  \t\t   '),
+            rpn_eval('5 8 3 + *')
+        )
 
 if __name__ == '__main__':
     unittest.main()
